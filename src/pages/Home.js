@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Products from '../components/Products'
+import { NavlinkContext } from '../context/NavlinkContext';
+
 
 const Home = () => {
 
-   
+    const {navlink, setnavlink} = useContext(NavlinkContext);
+
+    useEffect(() => {
+        setnavlink('home')
+    }, [])
+
     return (
         <div className='container mx-auto'>
 

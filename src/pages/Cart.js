@@ -1,33 +1,39 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../context/CartContext';
 import axios from 'axios';
+import { NavlinkContext } from '../context/NavlinkContext';
 
 const Cart = () => {
-    const { cart } = useContext(CartContext);
+    const { cart, setCart } = useContext(CartContext);
+    const [cartItems, setCartItems] = useState([]);
+
+    const {navlink, setnavlink} = useContext(NavlinkContext);
+
+    useEffect(() => {
+        setnavlink('cart')
+    }, [])
 
     useEffect(() => {
         if (cart.items) {
             const ids = Object.keys(cart.items);
-            console.log(ids);
 
             axios.post('/cart-items', { items: JSON.stringify(ids) })
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            // fetch('/cart-items', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: {
-            //         items: JSON.stringify(ids)
-            //     }
-            // })
+                .then((res) => {
+                    const items = res.data.items;
+                    setCartItems(items);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
-    }, [])
+    }, [cart])
+    // const deleteItem = (pid) => {
+    //     let _cart = { ...cart };
+    //     delete _cart.items[pid]
+
+    //     setCart(_cart);
+    // }
+
 
 
     return (
@@ -36,19 +42,25 @@ const Cart = () => {
 
             <div>
                 <ul>
-                    <li>
-                        <div className='flex items-center justify-between'>
-                            <img className='w-32 h-32' src="/images/oreo.png" alt="" />
-                            <h1 className="font-semibold text-xl">Oreo Shake</h1>
-                            <div className='flex items-center justify-center'>
-                                <button className="w-10 h-10 bg-red-500 rounded-md mx-4">-</button>
-                                <span className='font-bold'>1</span>
-                                <button className="w-10 h-10 bg-red-500 rounded-md mx-4">+</button>
-                            </div>
-                            <h2 className='font-semibold text-xl text-red-500'>Rs. 120</h2>
-                            <button className='bg-black w-40 h-12 text-white rounded-full font-bold'>Delete</button>
-                        </div>
-                    </li>
+                    {
+                        cartItems.length ? cartItems.map((item) => {
+                            return (
+                                <li>
+                                    <div className='flex items-center justify-between'>
+                                        <img className='w-32 h-32' src={item.image} alt="" />
+                                        <h1 className="font-semibold text-xl">{item.name}</h1>
+                                        <div className='flex items-center justify-center'>
+                                            <button className="w-10 h-10 bg-red-500 rounded-md mx-4">-</button>
+                                            <span className='font-bold'>1</span>
+                                            <button className="w-10 h-10 bg-red-500 rounded-md mx-4">+</button>
+                                        </div>
+                                        <h2 className='font-semibold text-xl text-red-500'>Rs. {item.price}</h2>
+                                        <button className='bg-black w-40 h-12 text-white rounded-full font-bold'>Delete</button>
+                                    </div>
+                                </li>
+                            )
+                        }) : ""
+                    }
                 </ul>
 
                 <hr className="text-red-500" />
