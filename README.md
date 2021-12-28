@@ -2,8 +2,9 @@
 
 A cafe app for ordering food online.
 
-![Screenshot (26)](https://user-images.githubusercontent.com/84285348/147536940-ff87d30f-ee5a-4e8b-a052-3466ad0fc225.png?raw=true)
-![Screenshot (27)](https://user-images.githubusercontent.com/84285348/147536952-5b253c15-d612-489a-b05a-f9560f36e56d.png?raw=true)
+![Screenshot (26)](https://user-images.githubusercontent.com/84285348/147537331-1d9f3e95-3da0-4bd3-92f4-c03f9476a986.png?raw=true)
+![Screenshot (27)](https://user-images.githubusercontent.com/84285348/147537338-45991e21-edf7-4a1c-8309-ddd15f64f6cd.png?raw=true)
+
 
 
 ## How to use
